@@ -67,7 +67,7 @@ src/ui/        vanilla DOM views: hand, history, setup, card picker / number pad
 src/store.ts   app state + localStorage
 vite.config.ts also generates the offline service worker (sw.js)
 tests/         golden + engine tests, and a jsdom smoke test that taps through a hand
-scripts/make-icons.py  regenerates the PNG app icons (stdlib only)
+scripts/make-icons.mjs renders the PNG app icons from public/icon.svg (needs Chrome)
 ```
 
 A hand is stored as a list of events (actions and board cards), and everything else is

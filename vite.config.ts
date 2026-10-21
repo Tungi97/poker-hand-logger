@@ -1,4 +1,4 @@
-import { readdirSync } from 'node:fs';
+import { readFileSync, readdirSync } from 'node:fs';
 import type { Plugin } from 'vite';
 import { defineConfig } from 'vitest/config';
 
@@ -13,9 +13,13 @@ function serviceWorker(): Plugin {
     generateBundle(_, bundle) {
       const publicFiles = readdirSync('public');
       const files = ['./', ...[...Object.keys(bundle), ...publicFiles].map((f) => `./${f}`)];
+      // version covers the bundle and public/ (icons, manifest), so any change refreshes the cache
+      const parts = [
+        ...Object.values(bundle).map((c) => ('code' in c ? c.code : Buffer.from(c.source).toString('base64'))),
+        ...publicFiles.map((f) => readFileSync(`public/${f}`).toString('base64')),
+      ];
       let hash = 0;
-      for (const ch of JSON.stringify(Object.values(bundle).map((c) => ('code' in c ? c.code : c.source))))
-        hash = (hash * 31 + ch.charCodeAt(0)) | 0;
+      for (const ch of parts.join('|')) hash = (hash * 31 + ch.charCodeAt(0)) | 0;
       this.emitFile({
         type: 'asset',
         fileName: 'sw.js',
