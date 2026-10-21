@@ -1,0 +1,22 @@
+{
+  "name": "poker-hand-logger",
+  "version": "1.0.0",
+  "description": "Mobile-first PWA for logging live poker hands as compact Poker Bankroll Tracker notes",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "icons": "python3 scripts/make-icons.py"
+  },
+  "type": "module",
+  "devDependencies": {
+    "@types/node": "^26.6.5",
+    "jsdom": "^30.1.3",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.5",
+    "vitest": "^5.0.5"
+  },
+  "private": true
+}
